@@ -85,7 +85,19 @@ app.post('/login', (req,res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-    res.render('dashboard.jade');
+    if(req.session && req.session.user){
+        User.findOne({email: req.session.user.email}, (err, user) => {
+            if(!user){
+                req.session.reset();
+                res.redirect('/login');
+            } else {
+                res.locals.user = user;
+                res.render('dashboard.jade');
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
 });
 
 app.listen(3000, () => {
