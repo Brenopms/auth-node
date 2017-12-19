@@ -18,7 +18,7 @@ const middleware = require('./middleware');
  *  @param {Object} res - The http response object.
  *  @param {Object} user - A user object.
  */
-module.exports.createUserSession = function(req, res, user) {
+module.exports.createUserSession = (req, res, user) => {
   let cleanUser = {
     firstName:  user.firstName,
     lastName:   user.lastName,
@@ -71,7 +71,7 @@ module.exports.createApp = function() {
  *
  * If a user isn't logged in, they'll be redirected back to the login page.
  */
-module.exports.requireLogin = function(req, res, next) {
+module.exports.requireLogin = (req, res, next) => {
   if (!req.user) {
     res.redirect('/login');
   } else {
