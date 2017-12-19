@@ -2,12 +2,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('client-sessions');
 
 mongoose.connect('mongodb://localhost/svcc');
 
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended:true}))
+app.use(bodyParser.urlencoded({ extended:true}));
+
+app.use(session({
+    cookieName: 'session',
+    secret: 'some_random_string',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60* 1000 //optional
+}));
+
 
 //User model
 const Schema = mongoose.Schema;
@@ -39,7 +48,6 @@ app.post('/register', (req,res) => {
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-
     });
 
     user.save(function(err){
@@ -67,6 +75,7 @@ app.post('/login', (req,res) => {
             res.render('login.jade', {error: 'Incorrect email/password'});
         } else {
             if(req.body.password === user.password){
+                req.session.user = user;
                 res.redirect('/dashboard');
             } else {
                 res.render('login.jade', {error: 'incorrect email/password'});
