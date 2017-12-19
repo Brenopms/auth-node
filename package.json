@@ -1,0 +1,14 @@
+{
+  "name": "auth_nodevember",
+  "version": "1.0.0",
+  "description": "App created during the presentation of nodevember  \"Everything You Ever Wanted to Know about Node Authentication\" ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Breno Silva",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
