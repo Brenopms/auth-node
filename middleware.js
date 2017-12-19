@@ -1,5 +1,5 @@
-var models = require('./models');
-var utils = require('./utils');
+const models = require('./models');
+const utils = require('./utils');
 
 /**
  * A simple authentication middleware for Express.
@@ -9,7 +9,7 @@ var utils = require('./utils');
  */
 module.exports.simpleAuth = function(req, res, next) {
   if (req.session && req.session.user) {
-    models.User.findOne({ email: req.session.user.email }, 'firstName lastName email data', function(err, user) {
+    models.User.findOne({ email: req.session.user.email }, 'firstName lastName email data', (err, user) => {
       if (user) {
         utils.createUserSession(req, res, user);
       }
