@@ -4,12 +4,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('client-sessions');
 const bcrypt = require('bcryptjs');
+const csrf = require('csurf');
 
 mongoose.connect('mongodb://localhost/svcc');
 
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended:true}));
+app.use(csrf());
 
 app.use(session({
     cookieName: 'session',
@@ -69,7 +71,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-    res.render('register.jade');
+    res.render('register.jade', {csrfToken: req.csrfToken() });
 });
 
 //POST Route
@@ -100,7 +102,7 @@ app.post('/register', (req,res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('login.jade');
+    res.render('login.jade' , {csrfToken: req.csrfToken() });
 });
 
 app.post('/login', (req,res) => {
