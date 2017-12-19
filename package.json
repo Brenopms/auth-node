@@ -9,6 +9,7 @@
   "author": "Breno Silva",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "mongoose": "^4.13.7"
   }
 }
